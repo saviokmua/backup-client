@@ -8,24 +8,25 @@ module BackupClient
           include ::BackupClient::Helpers::LogHelper
           include ::BackupClient::Helpers::FtpHelper
 
-          def initialize(ftp_client, file, destination_folder)
-            @ftp_client = ftp_client
-            @file = file
-            @destination_folder = destination_folder
+          def initialize(ftp_client, local_file_path, remote_folder_path)
+            @ftp_client         = ftp_client
+            @local_file_path    = local_file_path
+            @remote_folder_path = remote_folder_path
           end
 
           def call
-            File.open(file, "rb") do |file_handle|
-              remote_file_path = destination_folder + "/" + File.basename(file)
-              remote_file_path = remote_file_path.gsub(%r{//+}, "/")
-              ftp_client.putbinaryfile(file_handle, remote_file_path)
-              log("Uploaded file #{file} → #{remote_file_path}")
+            remote_file_path = [remote_folder_path, local_file_path].join("/").gsub("//", "/")
+
+            File.open(local_file_path, "rb") do |file|
+              ftp_client.putbinaryfile(file, remote_file_path)
             end
+
+            log "Uploaded file #{local_file_path} → #{remote_file_path}"
           end
 
           private
 
-          attr_reader :ftp_client, :file, :destination_folder
+          attr_reader :ftp_client, :local_file_path, :remote_folder_path
         end
       end
     end

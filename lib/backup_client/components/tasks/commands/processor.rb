@@ -18,15 +18,15 @@ module BackupClient
           def call
             log("Processing task #{task["name"]}")
 
-            task["providers"].each do |provider_name|
-              provider = fetch_provider(provider_name)
+            task["providers"].each do |task_provider|
+              provider = fetch_provider(task_provider)
               next if provider.nil?
 
-              log("Processing provider #{provider_name}")
+              log("Processing provider #{task_provider['name']}#{task_provider['type']}")
 
               processing_task_for_provider(provider)
-            # rescue StandardError => e
-            #   log("Unexpected error: #{e}, #{provider["type"].upcase}: #{provider["name"].upcase}")
+              # rescue StandardError => e
+              #   log(" Unexpected error: #{e}, #{provider["type"].upcase}: #{provider["name"].upcase}")
             end
           end
 
@@ -47,7 +47,7 @@ module BackupClient
 
           def upload_to_ftp(provider, source_paths, use_timestamp)
             ::BackupClient::Components::Ftp::Commands::Upload
-              .new(source_paths, provider, timestamp: Time.now).call
+              .new(provider, source_paths, use_timestamp: use_timestamp, timestamp: Time.now).call
           end
 
           def copy_to_local(provider, local_paths, use_timestamp)
@@ -68,8 +68,10 @@ module BackupClient
             end
           end
 
-          def fetch_provider(provider_name)
-            providers[provider_name]
+          def fetch_provider(task_provider)
+            providers.find do |provider|
+              task_provider['name'] == provider['name'] && task_provider['type'] == provider['type']
+            end
           end
         end
       end
