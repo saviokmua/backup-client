@@ -1,112 +1,43 @@
-# 🔄 Backup Client
+# BackupClient
 
-A Ruby script to copy files and directories to multiple destinations:
-- FTP servers
-- SCP servers (optional)
-- Local folders
+TODO: Delete this and the text below, and describe your gem
 
-Supports Windows.
+Welcome to your new gem! In this directory, you'll find the files you need to be able to package up your Ruby library into a gem. Put your Ruby code in the file `lib/backup_client`. To experiment with that code, run `bin/console` for an interactive prompt.
 
----
+## Installation
 
-## 📁 Purpose
+TODO: Replace `UPDATE_WITH_YOUR_GEM_NAME_IMMEDIATELY_AFTER_RELEASE_TO_RUBYGEMS_ORG` with your gem name right after releasing it to RubyGems.org. Please do not do it earlier due to security reasons. Alternatively, replace this section with instructions to install your gem from git if you don't plan to release to RubyGems.org.
 
-- Copy individual files or full directories
-- Upload to multiple destinations simultaneously
-- Optional subfolder creation with timestamp (`yyyy.mm.dd HH:mm:ss`)
+Install the gem and add to the application's Gemfile by executing:
 
----
-
-## ⚙️ Configuration: `config.yml`
-
-```
-destinations:
-- name: "main_server"
-  type: "ftp"
-  host: "ftp.example.com"
-  user: "ftp_user"
-  password: "ftp_password"
-
-- name: "local_backup"
-  type: "local"
-  path: "D:/backups"
-
-- name: "scp_server"
-  type: "scp"
-  host: "scp.example.com"
-  user: "scp_user"
-  password: "scp_password"
-  path: "/home/scp_user/backups"
-
-tasks:
-- name: "Daily Project A Backup"
-  source_folders:
-    - "C:/projects/a"
-    - "C:/projects/shared/readme.txt"
-      destination_names:
-    - "main_server"
-    - "local_backup"
-      timestamped_subfolder: true
-
-- name: "Quick Local Copy"
-  source_folders:
-    - "C:/notes"
-      destination_names:
-    - "local_backup"
-      timestamped_subfolder: false
-
+```bash
+bundle add UPDATE_WITH_YOUR_GEM_NAME_IMMEDIATELY_AFTER_RELEASE_TO_RUBYGEMS_ORG
 ```
 
----
+If bundler is not being used to manage dependencies, install the gem by executing:
 
-## 🔑 Configuration Options
-
-### 🔹 `destinations`
-A list of all available upload targets.
-
-| Field      | Type    | Required | Description                                      |
-|------------|---------|----------|--------------------------------------------------|
-| `name`     | string  | ✅       | Unique name used to reference the destination    |
-| `type`     | string  | ✅       | Either `ftp`, `local`, or `scp`                  |
-| `host`     | string  | only for FTP/SCP | Host address                             |
-| `user`     | string  | only for FTP/SCP | Username                                 |
-| `password` | string  | only for FTP/SCP | Password                                 |
-| `path`     | string  | for `local` or `scp` | Destination path                    |
-
----
-
-### 🔹 `tasks`
-Describes which files/folders to upload, and to which destinations.
-
-| Field                   | Type     | Required | Description                                                  |
-|------------------------|----------|----------|--------------------------------------------------------------|
-| `name`                 | string   | ✅       | Name of the task                                             |
-| `source_folders`       | array    | ✅       | List of source file/folder paths                             |
-| `destination_names`    | array    | ✅       | References destination `name`s from the list above           |
-| `timestamped_subfolder`| boolean  | ❌ (default: `true`) | Whether to create a subfolder with current timestamp |
-
----
-
-## 🚀 Running the script
-
-```
-ruby copy_script.rb
+```bash
+gem install UPDATE_WITH_YOUR_GEM_NAME_IMMEDIATELY_AFTER_RELEASE_TO_RUBYGEMS_ORG
 ```
 
-> Requires Ruby installed and all dependencies resolved (e.g. `net-ftp`).
+## Usage
 
----
+TODO: Write usage instructions here
 
-## 📦 TODO / Optional Features
+## Development
 
-- [ ] SCP support via `net-scp` or `pscp.exe`
-- [ ] Dry-run mode
-- [ ] Logging to file
+After checking out the repo, run `bin/setup` to install dependencies. Then, run `rake spec` to run the tests. You can also run `bin/console` for an interactive prompt that will allow you to experiment.
 
----
+To install this gem onto your local machine, run `bundle exec rake install`. To release a new version, update the version number in `version.rb`, and then run `bundle exec rake release`, which will create a git tag for the version, push git commits and the created tag, and push the `.gem` file to [rubygems.org](https://rubygems.org).
 
-## 🪪 License
+## Contributing
 
-MIT License – use freely in commercial and personal projects.
+Bug reports and pull requests are welcome on GitHub at https://github.com/[USERNAME]/backup_client. This project is intended to be a safe, welcoming space for collaboration, and contributors are expected to adhere to the [code of conduct](https://github.com/[USERNAME]/backup_client/blob/master/CODE_OF_CONDUCT.md).
 
----
+## License
+
+The gem is available as open source under the terms of the [MIT License](https://opensource.org/licenses/MIT).
+
+## Code of Conduct
+
+Everyone interacting in the BackupClient project's codebases, issue trackers, chat rooms and mailing lists is expected to follow the [code of conduct](https://github.com/[USERNAME]/backup_client/blob/master/CODE_OF_CONDUCT.md).
