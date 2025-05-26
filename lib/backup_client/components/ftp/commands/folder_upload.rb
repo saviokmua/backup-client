@@ -17,7 +17,7 @@ module BackupClient
           def call
             current_destination_folder = destination_folder + local_path
             ftp_mkdir_p(current_destination_folder)
-            Dir.glob("#{local_path}/**/*", File::FNM_DOTMATCH).each do |path|
+            Dir.glob("#{local_path.gsub('\\', '/')}/**/*", File::FNM_DOTMATCH).each do |path|
               basename = File.basename(path)
               next if %w[. .. .git].include?(basename)
 
