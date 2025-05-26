@@ -15,7 +15,7 @@ module BackupClient
           end
 
           def call
-            remote_file_path = [remote_folder_path, local_file_path].join("/").gsub("//", "/")
+            remote_file_path = [remote_folder_path, to_unix_path(local_file_path)].join("/").gsub("//", "/")
 
             File.open(local_file_path, "rb") do |file|
               ftp_client.putbinaryfile(file, remote_file_path)

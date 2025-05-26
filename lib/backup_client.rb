@@ -17,7 +17,7 @@ Dir.glob("components/**/*.rb").sort.each do |file|
 end
 
 module BackupClient
-  VERSION = "0.1.6"
+  VERSION = "0.1.7"
 
   class Processor
     include ::BackupClient::Helpers::LogHelper

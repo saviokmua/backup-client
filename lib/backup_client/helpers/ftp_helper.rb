@@ -4,11 +4,7 @@ module BackupClient
   module Helpers
     module FtpHelper
       def to_unix_path(path)
-        if Regexp.new('^[A-Za-z]:\\\\') =~ path
-          path.sub(/^[A-Za-z]:\\/, '/').gsub('\\', '/')
-        else
-          path
-        end
+        path.split(':').last.gsub("\\", "/").gsub(/\/+/, '/')
       end
 
       def ftp_chdir(ftp_client, path)

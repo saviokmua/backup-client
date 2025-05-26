@@ -15,7 +15,7 @@ module BackupClient
           end
 
           def call
-            current_destination_folder = destination_folder + local_path
+            current_destination_folder = destination_folder + to_unix_path(local_path)
             ftp_mkdir_p(current_destination_folder)
             Dir.glob("#{local_path.gsub('\\', '/')}/**/*", File::FNM_DOTMATCH).each do |path|
               basename = File.basename(path)
