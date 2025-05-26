@@ -3,6 +3,14 @@
 module BackupClient
   module Helpers
     module FtpHelper
+      def to_unix_path(path)
+        if Regexp.new('^[A-Za-z]:\\\\') =~ path
+          path.sub(/^[A-Za-z]:\\/, '/').gsub('\\', '/')
+        else
+          path
+        end
+      end
+
       def ftp_chdir(ftp_client, path)
         return if ftp_client.pwd == path
 
@@ -32,9 +40,9 @@ module BackupClient
 
       def ftp_mkdir_p(path)
         root_chdir(ftp_client)
-        return if ftp_mkdir(path)
+        return if ftp_mkdir(to_unix_path(path))
 
-        parts = path.split("/").reject(&:empty?)
+        parts = to_unix_path(path).split("/").reject(&:empty?)
         parts.each do |part|
           begin
             ftp_client.mkdir(part)

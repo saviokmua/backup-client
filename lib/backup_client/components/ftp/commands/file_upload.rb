@@ -22,6 +22,8 @@ module BackupClient
             end
 
             log "Uploaded file #{local_file_path} → #{remote_file_path}"
+          rescue StandardError => error
+            log "Unexpected file upload error. #{local_file_path} → #{remote_file_path}, error: #{error.to_s}"
           end
 
           private

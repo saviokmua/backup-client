@@ -31,7 +31,7 @@ module BackupClient
 
           def ftp_processing
             source_paths.each do |path|
-              folder = to_unix_path(path)
+              folder = path# to_unix_path(path)
 
               if File.file?(folder)
                 upload_file_ftp(folder, destination_path)
@@ -40,14 +40,6 @@ module BackupClient
               else
                 log "Invalid path: #{folder}"
               end
-            end
-          end
-
-          def to_unix_path(path)
-            if Regexp.new('^[A-Za-z]:\\\\') =~ path
-              path.sub(/^[A-Za-z]:\\/, '/').gsub('\\', '/')
-            else
-              path
             end
           end
 
