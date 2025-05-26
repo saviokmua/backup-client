@@ -4,7 +4,7 @@ module BackupClient
   module Helpers
     module FtpHelper
       def to_unix_path(path)
-        path.split(':').last.gsub("\\", "/").gsub(/\/+/, '/')
+        path.sub(/^[A-Za-z]:[\\\/]/, '').last.gsub("\\", "/").gsub(/\/+/, '/')
       end
 
       def ftp_chdir(ftp_client, path)
@@ -18,11 +18,15 @@ module BackupClient
       end
 
       def upload_dir_ftp(local_folder, destination_folder)
-        ::BackupClient::Components::Ftp::Commands::FolderUpload.new(ftp_client, local_folder, destination_folder).call
+        ::BackupClient::Components::Ftp::Commands::FolderUpload.new(
+          ftp_client, local_folder.gsub('//', '/'), destination_folder
+        ).call
       end
 
       def upload_file_ftp(local_file_path, remote_folder_path)
-        ::BackupClient::Components::Ftp::Commands::FileUpload.new(ftp_client, local_file_path, remote_folder_path).call
+        ::BackupClient::Components::Ftp::Commands::FileUpload.new(
+          ftp_client, local_file_path.gsub('//', '/'), remote_folder_path
+        ).call
       end
 
       def ftp_dir_exists?(ftp_client, path)
