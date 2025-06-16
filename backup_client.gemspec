@@ -32,6 +32,9 @@ Gem::Specification.new do |spec|
   spec.require_paths = ["lib"]
 
   spec.add_dependency "net-ftp", "~> 0.2.0"
+  spec.add_dependency "archive-tar-minitar", "~> 0.9.0"
+  spec.add_dependency "ruby-progressbar", "~> 1.13.0"
+  spec.add_dependency "seven_zip_ruby", "~> 1.3.0"
   spec.add_development_dependency "rspec", "~> 3.0"
   spec.add_development_dependency "rubocop", "~> 1.21"
 

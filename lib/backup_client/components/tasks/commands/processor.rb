@@ -38,6 +38,8 @@ module BackupClient
             case provider["type"]
             when "ftp"
               upload_to_ftp(provider, source_paths, use_timestamp)
+            when 'scp'
+              upload_to_scp(provider, source_paths, use_timestamp)
             when "local"
               copy_to_local(provider, source_paths, use_timestamp)
             else
@@ -47,6 +49,11 @@ module BackupClient
 
           def upload_to_ftp(provider, source_paths, use_timestamp)
             ::BackupClient::Components::Ftp::Commands::Upload
+              .new(provider, source_paths, use_timestamp: use_timestamp, timestamp: Time.now).call
+          end
+
+          def upload_to_scp(provider, source_paths, use_timestamp)
+            ::BackupClient::Components::Scp::Commands::Upload
               .new(provider, source_paths, use_timestamp: use_timestamp, timestamp: Time.now).call
           end
 

@@ -22,7 +22,9 @@ module BackupClient
               next if %w[. .. .git].include?(basename)
 
               if File.directory?(path)
-                ::BackupClient::Components::Ftp::Commands::CreateFolder.new(ftp_client, destination_folder + path).call
+                ::BackupClient::Components::Ftp::Commands::CreateFolder.new(
+                  ftp_client, destination_folder + to_unix_path(path)
+                ).call
               else
                 upload_file_ftp(path, destination_folder)
               end
