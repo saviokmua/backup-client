@@ -16,7 +16,7 @@ module BackupClient
 
           def call
             remote_file_path = [remote_folder_path, to_unix_path(local_file_path)].join("/").gsub("//", "/")
-            
+
             scp_mkdir_p(ssh_client, remote_file_path)
             ssh_client.scp.upload!(local_file_path, remote_file_path)
 

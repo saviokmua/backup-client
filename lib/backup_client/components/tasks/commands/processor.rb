@@ -22,11 +22,11 @@ module BackupClient
               provider = fetch_provider(task_provider)
               next if provider.nil?
 
-              log("Processing provider #{task_provider['name']}#{task_provider['type']}")
+              log("Processing provider #{task_provider['name']} [#{task_provider['type']}]")
 
               processing_task_for_provider(provider)
-              # rescue StandardError => e
-              #   log(" Unexpected error: #{e}, #{provider["type"].upcase}: #{provider["name"].upcase}")
+              rescue StandardError => e
+                log("[SCP] Unexpected error: #{e}, #{provider["type"].upcase}: #{provider["name"].upcase}")
             end
           end
 

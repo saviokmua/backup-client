@@ -1,9 +1,7 @@
 # frozen_string_literal: true
-require_relative 'lib/backup_client'
-
 Gem::Specification.new do |spec|
   spec.name = "backup_client"
-  spec.version = ::BackupClient::VERSION
+  spec.version = "0.1.11"
   spec.authors = ["Alex"]
   spec.email = ["savio.km.ua@gmail.com"]
 
@@ -32,7 +30,7 @@ Gem::Specification.new do |spec|
   spec.require_paths = ["lib"]
 
   spec.add_dependency "net-ftp", "~> 0.2.0"
-  spec.add_dependency "archive-tar-minitar", "~> 0.9.0"
+  spec.add_dependency "archive-tar-minitar", '~> 0.12'
   spec.add_dependency "ruby-progressbar", "~> 1.13.0"
   spec.add_dependency "seven_zip_ruby", "~> 1.3.0"
   spec.add_development_dependency "rspec", "~> 3.0"

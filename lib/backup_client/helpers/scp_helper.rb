@@ -20,7 +20,10 @@ module BackupClient
       end
 
       def scp_mkdir_p(ssh_client, remote_dir)
-        ssh_client.exec!("mkdir -p \"#{remote_dir}\"")
+        cmd = "mkdir -p \"#{remote_dir}\""
+        log("[SCP] start mkdir successful!: #{cmd}")
+        ssh_client.exec!(cmd)
+        log("[SCP] finish mkdir successful!: #{cmd}")
       end
     end
   end

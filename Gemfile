@@ -9,8 +9,8 @@ gem "irb"
 gem "rake", "~> 13.0"
 
 gem "rspec", "~> 3.0"
-
-gem "rubocop", "~> 1.21"
 gem 'net-scp'
 gem 'zlib'
-gem 'archive-tar-minitar'
+gem 'archive-tar-minitar', '~> 0.12'
+gem 'ed25519'
+gem 'bcrypt_pbkdf'

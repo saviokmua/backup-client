@@ -18,11 +18,13 @@ module BackupClient
           end
 
           def call
+            log('[SCP] Start upload!')
             scp_mkdir_p(ssh_client, destination_path)
-
+            log('[SCP] Start upload!')
             scp_processing
 
             ssh_client.close
+            log('[SCP] Finish upload!')
           end
 
           private
@@ -38,7 +40,10 @@ module BackupClient
                 else
                   options[:password] = provider['password']
                 end
-                Net::SSH.start(provider['host'], provider['user'], options)
+                log("ssh_client start, options #{options.inspect}")
+                res = Net::SSH.start(provider['host'], provider['user'], options)
+                log('ssh_client finish')
+                res
               end
           end
 
@@ -47,8 +52,10 @@ module BackupClient
               #folder = path['path'] # to_unix_path(path)
 
               if File.file?(path['path'])
+                log("[SCP] path #{path['path']} is folder")
                 upload_file_scp(ssh_client, path['path'], destination_path)
               elsif File.directory?(path['path'])
+                log("[SCP] path #{path['path']} is file")
                 upload_dir_scp(ssh_client, path, destination_path)
               else
                 log "[SCP] Invalid path: #{path['path']}"
